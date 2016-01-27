@@ -52,10 +52,9 @@ class GraphQL::ActiveRecord::Resolver
       ast_node
     )
     query = query.eager_load *eager_load_args if eager_load_args.present?
-    # TODO: Where args
-    # query = query.where(
-    #   GraphQL::ActiveRecord::ASTNodeUtils.where_args_for ast_node
-    # )
+    query = query.where(
+      GraphQL::ActiveRecord::ASTNodeUtils.where_args_for ast_node
+    )
     return query
   end
 

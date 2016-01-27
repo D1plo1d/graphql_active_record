@@ -41,23 +41,25 @@ module GraphQL::ActiveRecord::ASTNodeUtils
   # Generate a nested hash of connection args that can be used in a ActiveRecord
   # where statement
   def self.where_args_for(ast_node)
-    reduce_ast(ast_node) do |ast_node, node_info, nested_where_args|
-      # passthrough for non-connections
-      next nested_where_args.try :flatten unless node_info[:is_connection]
-      # getting custom where args for this connection
-      where_args = Hash[ast_node.arguments.map do |ast_arg|
-        [ast_arg.key, ast_arg.value]
-      end]
-      # TODO: merging pagination args
-      # TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-      # merging the where args for the nested connections
-      nested_where_args.each {|h| where_args.merge! h}
-      # returning the where args
-      if node_info[:top_level_connection]
-        next where_args
-      else
-        next {ast_node.name => where_args}
-      end
-    end
+    # TODO!
+    return {}
+    # reduce_ast(ast_node) do |ast_node, node_info, nested_where_args|
+    #   # passthrough for non-connections
+    #   next nested_where_args.try :flatten unless node_info[:is_connection]
+    #   # getting custom where args for this connection
+    #   where_args = Hash[ast_node.arguments.map do |ast_arg|
+    #     [ast_arg.key, ast_arg.value]
+    #   end]
+    #   # TODO: merging pagination args
+    #   # TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+    #   # merging the where args for the nested connections
+    #   nested_where_args.each {|h| where_args.merge! h}
+    #   # returning the where args
+    #   if node_info[:top_level_connection]
+    #     next where_args
+    #   else
+    #     next {ast_node.name => where_args}
+    #   end
+    # end
   end
 end

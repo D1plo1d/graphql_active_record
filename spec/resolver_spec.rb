@@ -89,7 +89,7 @@ describe GraphQL::ActiveRecord::Resolver do
         resolver = GraphQL::ActiveRecord::Resolver.new("Pet")
         user = User.create!
         pet = Pet.create! user: user
-        expect(resolver).to receive(:base_query_for).and_return Pet.all
+        expect(resolver).not_to receive(:base_query_for)
 
         result = resolver.resolve_connection(user, {}, ctx)
 
@@ -146,7 +146,7 @@ describe GraphQL::ActiveRecord::Resolver do
 
     context "given a non-empty ASTNodeUtils.where_args_for" do
       it "filters the models by those where args" do
-        expect(ast_utils).to receive(:eager_load_args_for).and_return nil
+        expect(ast_utils).to receive(:eager_load_args_for).and_return [:pets]
         expect(ast_utils).to receive(:where_args_for).and_return(
           {pets: {age: 12}}
         )
