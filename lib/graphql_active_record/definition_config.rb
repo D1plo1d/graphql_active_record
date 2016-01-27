@@ -6,7 +6,7 @@ class GraphQL::DefinitionHelpers::DefinedByConfig::DefinitionConfig
     resolver = active_record_resolver_for name, opts
     # TODO: only add fields at the top level
     # Field
-    field resolver.singular_name.to_sym do
+    field resolver.assoc_singular_name.to_sym do
       type resolver.type
       argument :id, types.String
       resolve -> (obj, args, ctx) {
@@ -29,7 +29,7 @@ class GraphQL::DefinitionHelpers::DefinedByConfig::DefinitionConfig
   protected
 
   def active_record_resolver_for(name, opts)
-    GraphQLActiveRecord::Resolver.new(name, opts)
+    GraphQL::ActiveRecord::Resolver.new(name, opts)
   end
 
 end
